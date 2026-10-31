@@ -1,5 +1,5 @@
 w
-name: Android APK
+'on':
 
 'on':
   workflow_dispatch:
