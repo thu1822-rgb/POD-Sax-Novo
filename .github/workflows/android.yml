@@ -1,4 +1,4 @@
-
+2
 name: Android APK
 
 on:
@@ -82,8 +82,15 @@ jobs:
 
 
 
-      - name: Sincronizar aplicativo
-        run: npx cap sync android
+      
+      - name: Conferir imagens no Android
+        run: |
+          echo "IMAGENS NA PASTA WWW:"
+          find www -type f -iname "*.png"
+
+          echo "IMAGENS COPIADAS PARA ANDROID:"
+          find android/app/src/main/assets -type f
+
 
       - name: Compilar APK
         run: |
