@@ -32,30 +32,30 @@ jobs:
       - name: Criar projeto Android
         run: npx cap add android 
       
+      
       - name: Preparar ícones Android
         run: |
-          python -m pip install Pillow
           python - <<'PY'
-          from PIL import Image
           from pathlib import Path
 
-          origem = Image.open("www/assets/icon-512.png").convert("RGBA")
+          arquivos = [
+              p for p in Path(".").rglob("*")
+              if p.is_file() and p.name.lower() == "icon-512.png"
+          ]
 
-          tamanhos = {
-              "mdpi": 48,
-              "hdpi": 72,
-              "xhdpi": 96,
-              "xxhdpi": 144,
-              "xxxhdpi": 192
-          }
+          print("Ícones encontrados:")
+          for p in arquivos:
+              print(p)
 
-          for densidade, tamanho in tamanhos.items():
-              pasta = Path(f"android/app/src/main/res/mipmap-{densidade}")
-              pasta.mkdir(parents=True, exist_ok=True)
-              imagem = origem.resize((tamanho, tamanho), Image.Resampling.LANCZOS)
-              imagem.save(pasta / "ic_launcher.png")
+          if not arquivos:
+              raise SystemExit("ERRO: icon-512.png não foi encontrado no projeto.")
 
-          print("Ícones Android preparados com sucesso.")
+          origem = next(
+              (p for p in arquivos if p.as_posix() == "www/assets/icon-512.png"),
+              arquivos[0]
+          )
+
+          print("Usando:", origem)
           PY
 
 
