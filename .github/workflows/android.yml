@@ -1,4 +1,4 @@
-2
+
 name: Android APK
 
 on:
@@ -30,35 +30,20 @@ jobs:
         run: npm install
 
       - name: Criar projeto Android
-        run: npx cap add android 
-      
-      
-      
+        run: npx cap add android
+
       - name: Preparar ícones Android
         run: |
-          echo "Procurando imagem original..."
-          find . -type f -iname "icon-512.png"
-
           python -m pip install Pillow
-
           python - <<'PY'
           from pathlib import Path
           from PIL import Image
 
-          arquivos = list(Path(".").rglob("icon-512.png"))
-
-          if not arquivos:
-              raise SystemExit("Imagem icon-512.png não encontrada.")
-
-          origem = next(
-              (p for p in arquivos if p.as_posix() == "www/assets/icon-512.png"),
-              arquivos[0]
-          )
-
-          print("Imagem utilizada:", origem)
+          origem = Path("www/assets/icon-512.png")
+          if not origem.exists():
+              raise SystemExit("Imagem não encontrada: " + str(origem))
 
           imagem = Image.open(origem).convert("RGBA")
-
           tamanhos = {
               "mdpi": 48,
               "hdpi": 72,
@@ -70,27 +55,22 @@ jobs:
           for densidade, tamanho in tamanhos.items():
               pasta = Path(f"android/app/src/main/res/mipmap-{densidade}")
               pasta.mkdir(parents=True, exist_ok=True)
-              redimensionada = imagem.resize(
-                  (tamanho, tamanho),
-                  Image.Resampling.LANCZOS
-              )
-              redimensionada.save(pasta / "ic_launcher.png")
-              redimensionada.save(pasta / "ic_launcher_round.png")
+              pequena = imagem.resize((tamanho, tamanho), Image.Resampling.LANCZOS)
+              pequena.save(pasta / "ic_launcher.png")
+              pequena.save(pasta / "ic_launcher_round.png")
 
-          print("Ícones Android gerados!")
+          print("Ícones gerados.")
           PY
 
+      - name: Sincronizar aplicativo
+        run: npx cap sync android
 
-
-      
       - name: Conferir imagens no Android
         run: |
           echo "IMAGENS NA PASTA WWW:"
           find www -type f -iname "*.png"
-
           echo "IMAGENS COPIADAS PARA ANDROID:"
           find android/app/src/main/assets -type f
-
 
       - name: Compilar APK
         run: |
