@@ -1,49 +1,33 @@
 
-name: Android APK
-
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Baixar projeto
-        uses: actions/checkout@v4
-
-      - name: Configurar Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Configurar Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-
-      - name: Instalar dependências
-        run: npm install
-
-      - name: Criar projeto Android
-        run: npx cap add android
-
       - name: Preparar ícones Android
         run: |
           python -m pip install Pillow
           python - <<'PY'
           from pathlib import Path
           from PIL import Image
+          import shutil
 
-          origem = Path("www/assets/icon-512.png")
-          if not origem.exists():
-              raise SystemExit("Imagem não encontrada: " + str(origem))
+          arquivos = [
+              p for p in Path(".").rglob("*")
+              if p.is_file() and p.name.lower() == "icon-512.png"
+              and ".git" not in p.parts
+          ]
 
-          imagem = Image.open(origem).convert("RGBA")
+          if not arquivos:
+              raise SystemExit("Nenhum icon-512.png foi encontrado.")
+
+          origem = arquivos[0]
+          destino = Path("www/assets/icon-512.png")
+          destino.parent.mkdir(parents=True, exist_ok=True)
+
+          if origem.resolve() != destino.resolve():
+              shutil.copy2(origem, destino)
+
+          print("Imagem encontrada:", origem)
+          print("Imagem copiada para:", destino)
+
+          imagem = Image.open(destino).convert("RGBA")
+
           tamanhos = {
               "mdpi": 48,
               "hdpi": 72,
@@ -55,31 +39,13 @@ jobs:
           for densidade, tamanho in tamanhos.items():
               pasta = Path(f"android/app/src/main/res/mipmap-{densidade}")
               pasta.mkdir(parents=True, exist_ok=True)
-              pequena = imagem.resize((tamanho, tamanho), Image.Resampling.LANCZOS)
+              pequena = imagem.resize(
+                  (tamanho, tamanho),
+                  Image.Resampling.LANCZOS
+              )
               pequena.save(pasta / "ic_launcher.png")
               pequena.save(pasta / "ic_launcher_round.png")
 
-          print("Ícones gerados.")
+          print("Ícones preparados com sucesso!")
           PY
-
-      - name: Sincronizar aplicativo
-        run: npx cap sync android
-
-      - name: Conferir imagens no Android
-        run: |
-          echo "IMAGENS NA PASTA WWW:"
-          find www -type f -iname "*.png"
-          echo "IMAGENS COPIADAS PARA ANDROID:"
-          find android/app/src/main/assets -type f
-
-      - name: Compilar APK
-        run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew assembleDebug
-
-      - name: Disponibilizar APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: POD-Sax-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+2
