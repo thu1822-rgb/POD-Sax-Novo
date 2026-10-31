@@ -1,4 +1,4 @@
-
+w
 name: Android APK
 
 'on':
@@ -35,6 +35,8 @@ jobs:
       - name: Preparar ícones Android
         run: |
           python -m pip install Pillow
+                    rm -f android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+          rm -f android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
           python - <<'PY'
           from pathlib import Path
           from PIL import Image
