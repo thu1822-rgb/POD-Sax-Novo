@@ -1,0 +1,6 @@
+{
+  "appId": "com.podsax.app",
+  "appName": "POD Sax",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
