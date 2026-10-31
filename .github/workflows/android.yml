@@ -30,24 +30,34 @@ jobs:
         run: npm install
 
       - name: Criar projeto Android
-        run: npx cap add android
-
+        run: npx cap add android 
+      
       - name: Preparar ícones Android
         run: |
-          mkdir -p android/app/src/main/res/mipmap-hdpi
-          mkdir -p android/app/src/main/res/mipmap-mdpi
-          mkdir -p android/app/src/main/res/mipmap-xhdpi
-          mkdir -p android/app/src/main/res/mipmap-xxhdpi
-          mkdir -p android/app/src/main/res/mipmap-xxxhdpi
-          for item in "mdpi:48" "hdpi:72" "xhdpi:96" "xxhdpi:144" "xxxhdpi:192"; do
-            density="${item%%:*}"
-            size="${item##*:}"
-            mkdir -p "android/app/src/main/res/mipmap-$density"
-            npx --yes sharp-cli \
-              -i www/assets/icon-512.png \
-              -o "android/app/src/main/res/mipmap-$density/ic_launcher.png" \
-              resize "$size" "$size"
-          done
+          python -m pip install Pillow
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+
+          origem = Image.open("www/assets/icon-512.png").convert("RGBA")
+
+          tamanhos = {
+              "mdpi": 48,
+              "hdpi": 72,
+              "xhdpi": 96,
+              "xxhdpi": 144,
+              "xxxhdpi": 192
+          }
+
+          for densidade, tamanho in tamanhos.items():
+              pasta = Path(f"android/app/src/main/res/mipmap-{densidade}")
+              pasta.mkdir(parents=True, exist_ok=True)
+              imagem = origem.resize((tamanho, tamanho), Image.Resampling.LANCZOS)
+              imagem.save(pasta / "ic_launcher.png")
+
+          print("Ícones Android preparados com sucesso.")
+          PY
+
 
       - name: Sincronizar aplicativo
         run: npx cap sync android
