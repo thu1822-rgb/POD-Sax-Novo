@@ -1,436 +1,220 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#071426">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071629">
 <title>POD Sax</title>
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="./manifest.json">
 <style>
-:root{
-  --bg:#071426;
-  --panel:#10243d;
-  --panel2:#142d49;
-  --gold:#d9ad58;
-  --gold2:#f2d99b;
-  --white:#f8f5ed;
-  --muted:#a7b5c7;
-}
+:root{--bg:#071629;--panel:#10243d;--gold:#d8ad55;--white:#f5f1e8;--muted:#aab6c5}
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--white);
-  font-family:Arial,sans-serif;
-}
-header{
-  padding:28px 20px 24px;
-  background:linear-gradient(145deg,#183655,#071426 85%);
-  border-bottom:1px solid #9d793c;
-}
-.brand{
-  display:flex;
-  align-items:center;
-  gap:16px;
-}
-.brand img{
-  width:88px;
-  height:88px;
-  object-fit:cover;
-  border:2px solid var(--gold);
-  border-radius:20px;
-  box-shadow:0 5px 20px #0008;
-}
-.brand h1{
-  color:var(--gold);
-  font-size:29px;
-  letter-spacing:3px;
-  margin:0;
-}
-.brand p{
-  color:var(--gold2);
-  font-size:12px;
-  letter-spacing:2px;
-  margin:8px 0 0;
-}
-main{max-width:760px;margin:auto;padding:18px}
-.welcome{
-  color:var(--gold2);
-  font-size:13px;
-  margin:3px 0 16px;
-}
-.stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:20px;
-}
-.stat{
-  background:linear-gradient(145deg,#173451,#102139);
-  border:1px solid #53627a;
-  border-radius:15px;
-  padding:17px;
-}
-.stat strong{
-  display:block;
-  color:var(--gold);
-  font-size:27px;
-}
-.stat span{color:var(--muted);font-size:12px}
-.section-title{
-  color:var(--gold);
-  font-size:17px;
-  margin:0 0 15px;
-}
-.panel{
-  background:var(--panel);
-  border:1px solid #304760;
-  border-radius:17px;
-  padding:18px;
-  margin-bottom:17px;
-  box-shadow:0 5px 15px #0003;
-}
-.hero{
-  background:linear-gradient(135deg,#183956,#102139);
-  border-color:#94733f;
-}
-.hero-label{
-  color:var(--gold);
-  font-size:11px;
-  letter-spacing:2px;
-  margin-bottom:12px;
-}
-.nav{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:9px;
-  margin-bottom:18px;
-}
-button{
-  background:linear-gradient(135deg,#e6c77f,#bd9142);
-  color:#172235;
-  border:0;
-  border-radius:10px;
-  padding:13px 10px;
-  font-weight:bold;
-  cursor:pointer;
-}
-.nav button{font-size:12px;min-height:54px}
-button.secondary{
-  background:#263e58;
-  color:white;
-  border:1px solid #51657c;
-}
-button.danger{background:#833e43;color:white}
-button.small{padding:8px 10px;font-size:12px}
-input,select,textarea{
-  width:100%;
-  padding:13px;
-  margin:7px 0 14px;
-  background:#091a2d;
-  color:white;
-  border:1px solid #435873;
-  border-radius:9px;
-  font:inherit;
-}
-textarea{min-height:110px;resize:vertical}
-label{font-size:13px;color:var(--gold2)}
-.item{
-  padding:14px 0;
-  border-bottom:1px solid #344b63;
-}
-.item:last-child{border-bottom:0}
-.item strong{color:var(--gold2)}
-.item p{
-  color:var(--muted);
-  font-size:13px;
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
-}
-a{color:var(--gold2)}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.hint{color:var(--muted);font-size:12px;line-height:1.6}
-.hidden{display:none!important}
-footer{
-  text-align:center;
-  padding:25px;
-  color:#8192a8;
-  font-size:11px;
-}
-.divider{height:1px;background:#40546c;margin:14px 0}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,sans-serif}
+header{text-align:center;padding:25px 16px 20px;background:linear-gradient(150deg,#102a48,#071629);border-bottom:1px solid #9d793d}
+.logo{width:112px;height:112px;object-fit:contain}
+h1{color:var(--gold);letter-spacing:4px;margin:8px 0 4px}
+.subtitle{color:var(--muted);font-size:13px}
+main{max-width:720px;margin:auto;padding:16px}
+.card{background:var(--panel);border:1px solid #30445b;border-radius:14px;padding:16px;margin-bottom:15px}
+h2{font-size:17px;color:var(--gold);margin:0 0 14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#0a1b30;border-radius:10px;padding:14px;text-align:center}
+.stat strong{display:block;color:var(--gold);font-size:25px}
+button,.button{background:var(--gold);color:#101b2a;border:0;border-radius:8px;padding:11px 14px;font-weight:bold;cursor:pointer;font-size:14px}
+button.secondary{background:#263d56;color:white;border:1px solid #52677f}
+button.danger{background:#853f42;color:white}
+input,select,textarea{width:100%;padding:12px;margin:6px 0 12px;border-radius:8px;border:1px solid #52677f;background:#071629;color:white;font-size:15px}
+label{font-size:13px;color:var(--muted)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.item{padding:12px;background:#0a1b30;border-radius:9px;margin:9px 0}
+.item strong{color:var(--gold)}
+.item p{white-space:pre-wrap;line-height:1.5}
+a{color:#f0c66d;overflow-wrap:anywhere}
+.hidden{display:none}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 </style>
 </head>
 <body>
-
 <header>
-  <div class="brand">
-    <img src="assets/icon-512.png" alt="POD Sax">
-    <div>
-      <h1>POD SAX</h1>
-      <p>LOUVOR • MÚSICA • ADORAÇÃO</p>
-    </div>
-  </div>
+<img class="logo" src="./assets/icon-512.png" alt="POD Sax">
+<h1>POD SAX</h1>
+<div class="subtitle">MÚSICA • LOUVOR • ADORAÇÃO</div>
 </header>
 
 <main>
-  <p class="welcome">Seu repertório de louvor em um só lugar.</p>
+<section class="card">
+<h2>Painel</h2>
+<div class="stats">
+<div class="stat"><strong id="totalMinistros">0</strong>Ministros</div>
+<div class="stat"><strong id="totalMusicas">0</strong>Músicas</div>
+</div>
+</section>
 
-  <div class="stats">
-    <div class="stat">
-      <strong id="totalMinistros">0</strong>
-      <span>Ministros de louvor</span>
-    </div>
-    <div class="stat">
-      <strong id="totalMusicas">0</strong>
-      <span>Músicas cadastradas</span>
-    </div>
-  </div>
+<section class="card">
+<h2>Ministro do Dia</h2>
+<label>Escolha o ministro</label>
+<select id="ministroDia" onchange="mostrarDia()">
+<option value="">Selecione um ministro</option>
+</select>
+<div id="setlistDia"></div>
+</section>
 
-  <div class="nav">
-    <button onclick="mostrar('dia')">★ Ministro do dia</button>
-    <button onclick="mostrar('ministros')">♬ Ministros</button>
-    <button onclick="mostrar('backup')">⇧ Backup</button>
-  </div>
+<section class="card">
+<h2>Cadastrar ministro</h2>
+<label>Nome do ministro</label>
+<input id="nomeMinistro" placeholder="Digite o nome">
+<button onclick="adicionarMinistro()">Cadastrar ministro</button>
+</section>
 
-  <section id="dia" class="panel hero">
-    <div class="hero-label">★ REPERTÓRIO ESPECIAL</div>
-    <h2 class="section-title">Ministro do Dia</h2>
-    <label>Selecionar ministro</label>
-    <select id="escolhaMinistro" onchange="carregarSetlist()">
-      <option value="">Escolha um ministro</option>
-    </select>
-    <div class="divider"></div>
-    <div id="setlist">
-      <p class="hint">Selecione um ministro para visualizar seu repertório.</p>
-    </div>
-  </section>
+<section class="card">
+<h2>Ministros cadastrados</h2>
+<div id="listaMinistros"></div>
+</section>
 
-  <section id="ministros" class="panel hidden">
-    <h2 class="section-title">Ministros de Louvor</h2>
-    <label>Nome do ministro</label>
-    <input id="nomeMinistro" placeholder="Digite o nome do ministro">
-    <button onclick="adicionarMinistro()">+ Cadastrar ministro</button>
-    <div class="divider"></div>
-    <div id="listaMinistros"></div>
-  </section>
+<section class="card">
+<h2>Cadastrar música</h2>
+<label>Ministro</label>
+<select id="donoMusica"></select>
+<label>Nome da música</label>
+<input id="nomeMusica" placeholder="Nome da música">
+<label>Cifra ou cifra melódica</label>
+<textarea id="cifraMusica" rows="5" placeholder="Digite ou cole a cifra aqui"></textarea>
+<label>Link da música</label>
+<input id="linkMusica" placeholder="https://...">
+<label>Link do PDF</label>
+<input id="pdfMusica" placeholder="https://...">
+<button onclick="adicionarMusica()">Salvar música</button>
+</section>
 
-  <section id="musicas" class="panel hidden">
-    <h2 class="section-title">Repertório do Ministro</h2>
-    <p id="nomeSelecionado" class="hint"></p>
+<section class="card">
+<h2>Biblioteca de músicas</h2>
+<div id="biblioteca"></div>
+</section>
 
-    <label>Nome da música</label>
-    <input id="nomeMusica" placeholder="Nome da música">
-
-    <label>Cifra ou cifra melódica</label>
-    <textarea id="cifraMusica" placeholder="Digite ou cole a cifra aqui..."></textarea>
-
-    <label>Link da música ou vídeo</label>
-    <input id="linkMusica" placeholder="https://...">
-
-    <label>Adicionar PDF da música</label>
-    <input id="pdfMusica" type="file" accept=".pdf,application/pdf">
-
-    <button onclick="adicionarMusica()">Salvar música</button>
-    <div class="divider"></div>
-    <h2 class="section-title">Músicas cadastradas</h2>
-    <div id="listaMusicas"></div>
-    <button class="secondary" onclick="mostrar('ministros')">Voltar</button>
-  </section>
-
-  <section id="backup" class="panel hidden">
-    <h2 class="section-title">Backup e restauração</h2>
-    <p class="hint">
-      Faça uma cópia dos ministros, músicas, cifras, links e PDFs.
-      Guarde o arquivo para recuperar seus dados futuramente.
-    </p>
-    <div class="actions">
-      <button onclick="exportarBackup()">Fazer backup</button>
-      <button class="secondary" onclick="document.getElementById('arquivoBackup').click()">Restaurar backup</button>
-      <input id="arquivoBackup" class="hidden" type="file" accept=".json,application/json" onchange="importarBackup(event)">
-    </div>
-  </section>
+<section class="card">
+<h2>Backup dos dados</h2>
+<p>Salve uma cópia dos ministros e das músicas para não perder seus cadastros.</p>
+<div class="actions">
+<button onclick="exportarBackup()">Exportar backup</button>
+<button class="secondary" onclick="document.getElementById('arquivoBackup').click()">Restaurar backup</button>
+<input class="hidden" type="file" id="arquivoBackup" accept=".json,application/json" onchange="importarBackup(event)">
+</div>
+</section>
 </main>
 
-<footer>
-  POD SAX<br>
-  <span style="color:#d9ad58">Música a serviço da adoração</span>
-</footer>
+<footer>POD SAX • Seu ministério de louvor organizado</footer>
 
 <script>
-let dados=JSON.parse(localStorage.getItem('podSaxDados')||'{"ministros":[]}');
-let ministroAtual=null;
+let dados=JSON.parse(localStorage.getItem("podSaxDados")||'{"ministros":[],"musicas":[]}');
 
 function salvar(){
- localStorage.setItem('podSaxDados',JSON.stringify(dados));
+ localStorage.setItem("podSaxDados",JSON.stringify(dados));
  atualizar();
 }
-
-function esc(s){
- return String(s||'').replace(/[&<>"']/g,c=>({
- '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
- }[c]));
-}
-
-function mostrar(id){
- ['dia','ministros','musicas','backup'].forEach(x=>
- document.getElementById(x).classList.add('hidden'));
- document.getElementById(id).classList.remove('hidden');
- atualizar();
-}
-
 function atualizar(){
- document.getElementById('totalMinistros').textContent=dados.ministros.length;
- document.getElementById('totalMusicas').textContent=
- dados.ministros.reduce((n,m)=>n+m.musicas.length,0);
+ document.getElementById("totalMinistros").textContent=dados.ministros.length;
+ document.getElementById("totalMusicas").textContent=dados.musicas.length;
 
- document.getElementById('listaMinistros').innerHTML=
- dados.ministros.map((m,i)=>`
- <div class="item">
- <strong>${esc(m.nome)}</strong>
- <p>${m.musicas.length} música(s)</p>
+ let opcoes='<option value="">Selecione um ministro</option>';
+ dados.ministros.forEach((m,i)=>opcoes+=`<option value="${i}">${esc(m)}</option>`);
+ document.getElementById("ministroDia").innerHTML=opcoes;
+ document.getElementById("donoMusica").innerHTML=opcoes;
+
+ document.getElementById("listaMinistros").innerHTML=dados.ministros.map((m,i)=>`
+ <div class="item"><strong>${esc(m)}</strong>
  <div class="actions">
- <button class="small" onclick="abrirMusicas(${i})">Ver repertório</button>
- <button class="small secondary" onclick="definirDia(${i})">Ministro do dia</button>
- <button class="small danger" onclick="excluirMinistro(${i})">Excluir</button>
- </div></div>`).join('')||'<p class="hint">Nenhum ministro cadastrado.</p>';
+ <button class="secondary" onclick="verMusicas(${i})">Ver músicas</button>
+ <button class="danger" onclick="excluirMinistro(${i})">Excluir</button>
+ </div></div>`).join("")||"<p>Nenhum ministro cadastrado.</p>";
 
- document.getElementById('escolhaMinistro').innerHTML=
- '<option value="">Escolha um ministro</option>'+
- dados.ministros.map((m,i)=>`<option value="${i}">${esc(m.nome)}</option>`).join('');
+ mostrarBiblioteca();
+ mostrarDia();
 }
-
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
 function adicionarMinistro(){
- let nome=document.getElementById('nomeMinistro').value.trim();
- if(!nome)return alert('Digite o nome do ministro.');
- dados.ministros.push({nome,musicas:[]});
- document.getElementById('nomeMinistro').value='';
+ let nome=document.getElementById("nomeMinistro").value.trim();
+ if(!nome)return alert("Digite o nome do ministro.");
+ dados.ministros.push(nome);
+ document.getElementById("nomeMinistro").value="";
  salvar();
 }
-
-function abrirMusicas(i){
- ministroAtual=i;
- document.getElementById('nomeSelecionado').textContent=
- 'Ministro: '+dados.ministros[i].nome;
- mostrar('musicas');
- listarMusicas();
-}
-
-function adicionarMusica(){
- if(ministroAtual===null)return;
- let nome=document.getElementById('nomeMusica').value.trim();
- if(!nome)return alert('Digite o nome da música.');
-
- let arquivo=document.getElementById('pdfMusica').files[0];
-
- function concluir(pdf){
- dados.ministros[ministroAtual].musicas.push({
- nome,
- cifra:document.getElementById('cifraMusica').value,
- link:document.getElementById('linkMusica').value.trim(),
- pdf:pdf
- });
- document.getElementById('nomeMusica').value='';
- document.getElementById('cifraMusica').value='';
- document.getElementById('linkMusica').value='';
- document.getElementById('pdfMusica').value='';
- salvar();
- listarMusicas();
- }
-
- if(arquivo){
-  if(arquivo.size>5*1024*1024){
-   return alert('Escolha um PDF de até 5 MB.');
-  }
-  let leitor=new FileReader();
-  leitor.onload=()=>concluir(leitor.result);
-  leitor.readAsDataURL(arquivo);
- }else{
-  concluir('');
- }
-}
-
-function listarMusicas(){
- let m=dados.ministros[ministroAtual];
- document.getElementById('listaMusicas').innerHTML=
- m.musicas.map((x,i)=>`
- <div class="item">
- <strong>${esc(x.nome)}</strong>
- ${x.cifra?`<p>${esc(x.cifra)}</p>`:''}
- ${x.link?`<p><a href="${esc(x.link)}" target="_blank" rel="noopener">Abrir música / vídeo</a></p>`:''}
- ${x.pdf?`<p><a href="${x.pdf}" target="_blank">Abrir PDF</a></p>`:''}
- <button class="small danger" onclick="excluirMusica(${i})">Excluir música</button>
- </div>`).join('')||'<p class="hint">Nenhuma música cadastrada.</p>';
-}
-
-function excluirMusica(i){
- if(confirm('Deseja excluir esta música?')){
- dados.ministros[ministroAtual].musicas.splice(i,1);
- salvar();listarMusicas();
- }
-}
-
 function excluirMinistro(i){
- if(confirm('Excluir este ministro e todas as suas músicas?')){
+ if(!confirm("Excluir este ministro e suas músicas?"))return;
  dados.ministros.splice(i,1);
+ dados.musicas=dados.musicas.filter(m=>m.ministro!==i);
+ dados.musicas.forEach(m=>{if(m.ministro>i)m.ministro--});
  salvar();
- }
 }
-
-function definirDia(i){
- document.getElementById('escolhaMinistro').value=i;
- mostrar('dia');
- carregarSetlist();
+function adicionarMusica(){
+ let i=document.getElementById("donoMusica").value;
+ let nome=document.getElementById("nomeMusica").value.trim();
+ if(i===""||!nome)return alert("Escolha o ministro e informe o nome da música.");
+ dados.musicas.push({
+ ministro:Number(i),
+ nome,
+ cifra:document.getElementById("cifraMusica").value,
+ link:document.getElementById("linkMusica").value.trim(),
+ pdf:document.getElementById("pdfMusica").value.trim()
+ });
+ ["nomeMusica","cifraMusica","linkMusica","pdfMusica"].forEach(id=>document.getElementById(id).value="");
+ salvar();
+ alert("Música cadastrada!");
 }
-
-function carregarSetlist(){
- let i=document.getElementById('escolhaMinistro').value;
- let area=document.getElementById('setlist');
- if(i===''){
- area.innerHTML='<p class="hint">Selecione um ministro para visualizar seu repertório.</p>';
- return;
- }
- let m=dados.ministros[Number(i)];
- area.innerHTML=`<h3 style="color:#f2d99b">${esc(m.nome)}</h3>`+
- (m.musicas.length?m.musicas.map(x=>`
- <div class="item">
- <strong>${esc(x.nome)}</strong>
- ${x.cifra?`<p>${esc(x.cifra)}</p>`:''}
- ${x.link?`<p><a href="${esc(x.link)}" target="_blank" rel="noopener">Abrir música</a></p>`:''}
- ${x.pdf?`<p><a href="${x.pdf}" target="_blank">Abrir PDF</a></p>`:''}
- </div>`).join(''):'<p class="hint">Nenhuma música cadastrada para este ministro.</p>');
+function cartaoMusica(m,i){
+ return `<div class="item">
+ <strong>${esc(m.nome)}</strong>
+ <p>Ministro: ${esc(dados.ministros[m.ministro]||"Não informado")}</p>
+ ${m.cifra?`<details><summary>Ver cifra</summary><p>${esc(m.cifra)}</p></details>`:""}
+ ${m.link?`<p><a href="${esc(m.link)}" target="_blank" rel="noopener">Abrir link da música</a></p>`:""}
+ ${m.pdf?`<p><a href="${esc(m.pdf)}" target="_blank" rel="noopener">Abrir PDF</a></p>`:""}
+ <button class="danger" onclick="excluirMusica(${i})">Excluir música</button>
+ </div>`;
 }
-
+function mostrarBiblioteca(){
+ document.getElementById("biblioteca").innerHTML=dados.musicas.map(cartaoMusica).join("")||"<p>Nenhuma música cadastrada.</p>";
+}
+function mostrarDia(){
+ let v=document.getElementById("ministroDia").value;
+ let area=document.getElementById("setlistDia");
+ if(v===""){area.innerHTML="<p>Selecione um ministro para visualizar o repertório.</p>";return}
+ area.innerHTML=dados.musicas.map((m,i)=>m.ministro===Number(v)?cartaoMusica(m,i):"").join("")||"<p>Este ministro ainda não tem músicas cadastradas.</p>";
+}
+function verMusicas(i){
+ document.getElementById("ministroDia").value=String(i);
+ mostrarDia();
+ document.getElementById("setlistDia").scrollIntoView({behavior:"smooth"});
+}
+function excluirMusica(i){
+ if(confirm("Excluir esta música?")){dados.musicas.splice(i,1);salvar()}
+}
 function exportarBackup(){
- let blob=new Blob([JSON.stringify(dados)],{type:'application/json'});
+ let blob=new Blob([JSON.stringify(dados,null,2)],{type:"application/json"});
  let url=URL.createObjectURL(blob);
- let a=document.createElement('a');
- a.href=url;a.download='backup-pod-sax.json';a.click();
+ let a=document.createElement("a");
+ a.href=url;a.download="backup-pod-sax.json";a.click();
  URL.revokeObjectURL(url);
 }
-
-function importarBackup(e){
- let arquivo=e.target.files[0];
+function importarBackup(event){
+ let arquivo=event.target.files[0];
  if(!arquivo)return;
  let leitor=new FileReader();
  leitor.onload=()=>{
  try{
  let novo=JSON.parse(leitor.result);
- if(!Array.isArray(novo.ministros))throw Error();
- if(confirm('A restauração substituirá os dados atuais. Continuar?')){
- dados=novo;salvar();alert('Backup restaurado com sucesso!');
- }
- }catch(err){
- alert('Não foi possível abrir esse arquivo de backup.');
- }
- e.target.value='';
+ if(!Array.isArray(novo.ministros)||!Array.isArray(novo.musicas))throw Error();
+ dados=novo;salvar();alert("Backup restaurado!");
+ }catch(e){alert("Arquivo de backup inválido.")}
  };
  leitor.readAsText(arquivo);
-}
-
-if('serviceWorker' in navigator){
- navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+ event.target.value="";
 }
 atualizar();
+if("serviceWorker" in navigator){
+ navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
+}
 </script>
 </body>
 </html>
