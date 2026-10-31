@@ -1,4 +1,5 @@
-name: Gerar APK POD Sax
+
+name: Android APK
 
 on:
   workflow_dispatch:
@@ -14,7 +15,7 @@ jobs:
       - name: Baixar projeto
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
+      - name: Configurar Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -31,10 +32,27 @@ jobs:
       - name: Criar projeto Android
         run: npx cap add android
 
+      - name: Preparar ícones Android
+        run: |
+          mkdir -p android/app/src/main/res/mipmap-hdpi
+          mkdir -p android/app/src/main/res/mipmap-mdpi
+          mkdir -p android/app/src/main/res/mipmap-xhdpi
+          mkdir -p android/app/src/main/res/mipmap-xxhdpi
+          mkdir -p android/app/src/main/res/mipmap-xxxhdpi
+          for item in "mdpi:48" "hdpi:72" "xhdpi:96" "xxhdpi:144" "xxxhdpi:192"; do
+            density="${item%%:*}"
+            size="${item##*:}"
+            mkdir -p "android/app/src/main/res/mipmap-$density"
+            npx --yes sharp-cli \
+              -i www/assets/icon-512.png \
+              -o "android/app/src/main/res/mipmap-$density/ic_launcher.png" \
+              resize "$size" "$size"
+          done
+
       - name: Sincronizar aplicativo
         run: npx cap sync android
 
-      - name: Gerar APK
+      - name: Compilar APK
         run: |
           cd android
           chmod +x gradlew
