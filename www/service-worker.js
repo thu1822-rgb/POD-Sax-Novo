@@ -1,8 +1,12 @@
-const CACHE_NAME = "pod-sax-v1";
+
+const CACHE_NAME = "pod-sax-v2";
+
 const FILES = [
   "./",
   "./index.html",
-  "./manifest.json"
+  "./manifest.json",
+  "./assets/icon-192.png",
+  "./assets/icon-512.png"
 ];
 
 self.addEventListener("install", event => {
@@ -28,8 +32,8 @@ self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      return cached || fetch(event.request);
-    })
+    fetch(event.request).catch(() =>
+      caches.match(event.request)
+    )
   );
 });
