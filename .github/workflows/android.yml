@@ -33,30 +33,53 @@ jobs:
         run: npx cap add android 
       
       
+      
       - name: Preparar ícones Android
         run: |
+          echo "Procurando imagem original..."
+          find . -type f -iname "icon-512.png"
+
+          python -m pip install Pillow
+
           python - <<'PY'
           from pathlib import Path
+          from PIL import Image
 
-          arquivos = [
-              p for p in Path(".").rglob("*")
-              if p.is_file() and p.name.lower() == "icon-512.png"
-          ]
-
-          print("Ícones encontrados:")
-          for p in arquivos:
-              print(p)
+          arquivos = list(Path(".").rglob("icon-512.png"))
 
           if not arquivos:
-              raise SystemExit("ERRO: icon-512.png não foi encontrado no projeto.")
+              raise SystemExit("Imagem icon-512.png não encontrada.")
 
           origem = next(
               (p for p in arquivos if p.as_posix() == "www/assets/icon-512.png"),
               arquivos[0]
           )
 
-          print("Usando:", origem)
+          print("Imagem utilizada:", origem)
+
+          imagem = Image.open(origem).convert("RGBA")
+
+          tamanhos = {
+              "mdpi": 48,
+              "hdpi": 72,
+              "xhdpi": 96,
+              "xxhdpi": 144,
+              "xxxhdpi": 192
+          }
+
+          for densidade, tamanho in tamanhos.items():
+              pasta = Path(f"android/app/src/main/res/mipmap-{densidade}")
+              pasta.mkdir(parents=True, exist_ok=True)
+              redimensionada = imagem.resize(
+                  (tamanho, tamanho),
+                  Image.Resampling.LANCZOS
+              )
+              redimensionada.save(pasta / "ic_launcher.png")
+              redimensionada.save(pasta / "ic_launcher_round.png")
+
+          print("Ícones Android gerados!")
           PY
+
 
 
       - name: Sincronizar aplicativo
