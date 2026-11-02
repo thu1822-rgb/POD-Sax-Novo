@@ -160,7 +160,7 @@ footer{text-align:center;color:#718096;font-size:10px;padding:22px}
 <label>Link do PDF</label>
 <input id="musicaPDF" placeholder="https://...">
 <div class="row">
-<button class="btn" onclick="salvarMusica()">Salvar música</button>
+<button class="btn" id="btnSalvarMusica" onclick="salvarMusica()">Salvar música</button>
 <button class="btn secondary" onclick="fecharFormMusica()">Cancelar</button>
 </div>
 </div>
@@ -248,6 +248,7 @@ dados.dataCulto=dados.dataCulto??"";
 
 let musicaAtual=null;
 let paginaAnterior="musicas";
+let musicaEditando=null;
 
 function esc(v){
  return String(v??"").replace(/[&<>"']/g,c=>({
@@ -447,15 +448,39 @@ function verMinistro(i){
  '<div class="empty">Nenhuma música cadastrada para este ministro.</div>');
 }
 
+/* ABRIR FORMULÁRIO PARA NOVA MÚSICA */
 function mostrarFormMusica(){
  if(!dados.ministros.length)return alert("Cadastre primeiro um ministro.");
+
+ musicaEditando=null;
+ limparFormularioMusica();
+
+ document.querySelector("#formMusica h3").textContent="Cadastrar música";
+ document.getElementById("btnSalvarMusica").textContent="Salvar música";
  document.getElementById("formMusica").classList.remove("hidden");
 }
 
+/* LIMPAR CAMPOS DO FORMULÁRIO */
+function limparFormularioMusica(){
+ ["musicaNome","musicaArtista","musicaTom","musicaCifra","musicaLink","musicaPDF"].forEach(id=>{
+  document.getElementById(id).value="";
+ });
+
+ document.getElementById("musicaMinistro").value="";
+ document.getElementById("musicaCategoria").value="Louvor";
+}
+
+/* CANCELAR OU FECHAR FORMULÁRIO */
 function fecharFormMusica(){
+ musicaEditando=null;
+ limparFormularioMusica();
+
+ document.querySelector("#formMusica h3").textContent="Cadastrar música";
+ document.getElementById("btnSalvarMusica").textContent="Salvar música";
  document.getElementById("formMusica").classList.add("hidden");
 }
 
+/* CADASTRAR OU ATUALIZAR MÚSICA */
 function salvarMusica(){
  let dono=document.getElementById("musicaMinistro").value;
  let nome=document.getElementById("musicaNome").value.trim();
@@ -464,7 +489,7 @@ function salvarMusica(){
   return alert("Escolha o ministro e informe o nome da música.");
  }
 
- dados.musicas.push({
+ const musica={
   ministro:Number(dono),
   nome,
   artista:document.getElementById("musicaArtista").value.trim(),
@@ -473,16 +498,56 @@ function salvarMusica(){
   cifra:document.getElementById("musicaCifra").value,
   link:document.getElementById("musicaLink").value.trim(),
   pdf:document.getElementById("musicaPDF").value.trim()
- });
+ };
+
+ if(musicaEditando!==null){
+  if(!dados.musicas[musicaEditando]){
+   return alert("Não foi possível localizar a música.");
+  }
+
+  dados.musicas[musicaEditando]=musica;
+ }else{
+  dados.musicas.push(musica);
+ }
 
  if(guardar()){
-  ["musicaNome","musicaArtista","musicaTom","musicaCifra","musicaLink","musicaPDF"].forEach(id=>{
-   document.getElementById(id).value="";
-  });
+  musicaEditando=null;
+  limparFormularioMusica();
 
-  fecharFormMusica();
-  alert("Música cadastrada!");
+  document.querySelector("#formMusica h3").textContent="Cadastrar música";
+  document.getElementById("btnSalvarMusica").textContent="Salvar música";
+
+  document.getElementById("formMusica").classList.add("hidden");
+
+  alert("Música salva com sucesso!");
  }
+}
+
+/* ABRIR FORMULÁRIO COM OS DADOS DA MÚSICA */
+function editarMusica(i){
+ const m=dados.musicas[i];
+
+ if(!m)return alert("Música não encontrada.");
+
+ musicaEditando=i;
+
+ ir("musicas");
+
+ document.getElementById("formMusica").classList.remove("hidden");
+
+ document.getElementById("musicaMinistro").value=String(m.ministro??"");
+ document.getElementById("musicaNome").value=m.nome||"";
+ document.getElementById("musicaArtista").value=m.artista||"";
+ document.getElementById("musicaTom").value=m.tom||"";
+ document.getElementById("musicaCategoria").value=m.categoria||"Louvor";
+ document.getElementById("musicaCifra").value=m.cifra||"";
+ document.getElementById("musicaLink").value=m.link||"";
+ document.getElementById("musicaPDF").value=m.pdf||"";
+
+ document.querySelector("#formMusica h3").textContent="Editar música";
+ document.getElementById("btnSalvarMusica").textContent="Salvar alterações";
+
+ window.scrollTo(0,0);
 }
 
 function cartao(m,i){
@@ -554,7 +619,8 @@ function detalhar(i){
  <p class="muted">Categoria: ${esc(m.categoria||"Não informada")}</p>
  </div>
 
- <button class="btn full" onclick="excluirMusica(${i})">Excluir música</button>
+ <button class="btn full" style="margin-bottom:10px" onclick="editarMusica(${i})">✏️ EDITAR MÚSICA</button>
+ <button class="btn danger full" onclick="excluirMusica(${i})">Excluir música</button>
  `;
 }
 
