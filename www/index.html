@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -45,155 +46,655 @@ hr{border:0;border-top:1px solid var(--line);margin:15px 0}footer{text-align:cen
 </style>
 </head>
 <body>
-<header><div class="brand"><img src="./assets/icon-512.png" alt="POD Sax"><div><strong>POD Sax</strong><small>BIBLIOTECA MUSICAL</small></div></div><button class="header-btn" onclick="ir('mais')" aria-label="Mais opções">⚙</button></header>
+
+<header>
+<div class="brand">
+<img src="./assets/icon-512.png" alt="POD Sax">
+<div><strong>POD Sax</strong><small>BIBLIOTECA MUSICAL</small></div>
+</div>
+<button class="header-btn" onclick="ir('mais')" aria-label="Mais opções">⚙</button>
+</header>
+
 <main>
+
 <section id="inicio" class="page active">
-<div class="hero"><img src="./assets/icon-512.png" alt="Logo POD Sax"><h1>POD Sax</h1><p>LOUVOR • MÚSICA • ADORAÇÃO</p><p style="color:var(--gold);margin-top:13px">Louvar é um privilégio!</p></div>
-<div class="stats"><div class="stat"><strong id="qMinistros">0</strong><small>Ministros</small></div><div class="stat"><strong id="qMusicas">0</strong><small>Músicas</small></div></div>
-<h3>MENU PRINCIPAL</h3><div class="menu-grid">
+<div class="hero">
+<img src="./assets/icon-512.png" alt="Logo POD Sax">
+<h1>POD Sax</h1>
+<p>LOUVOR • MÚSICA • ADORAÇÃO</p>
+<p style="color:var(--gold);margin-top:13px">Louvar é um privilégio!</p>
+</div>
+
+<div class="stats">
+<div class="stat"><strong id="qMinistros">0</strong><small>Ministros</small></div>
+<div class="stat"><strong id="qMusicas">0</strong><small>Músicas</small></div>
+</div>
+
+<h3>MENU PRINCIPAL</h3>
+<div class="menu-grid">
 <button class="menu-card" onclick="ir('ministros')"><span class="symbol">♟</span><strong>Ministros</strong><small>Gerencie os ministros de louvor</small></button>
 <button class="menu-card" onclick="ir('musicas')"><span class="symbol">♫</span><strong>Músicas</strong><small>Cadastre e organize músicas</small></button>
 <button class="menu-card" onclick="ir('repertorio')"><span class="symbol">▤</span><strong>Meu Repertório</strong><small>Cifras, PDFs e links</small></button>
 <button class="menu-card" onclick="ir('dia')"><span class="symbol">▦</span><strong>Ministro do Dia</strong><small>Prepare o repertório do culto</small></button>
-<button class="menu-card" onclick="ir('mais')"><span class="symbol">⚙</span><strong>Configurações</strong><small>Ajustes e backup do aplicativo</small></button></div>
-<div class="card" style="margin-top:16px"><h3>MINISTRO DO DIA</h3><div id="resumoDia" class="muted">Nenhum ministro selecionado.</div><button class="btn full" style="margin-top:12px" onclick="ir('dia')">Abrir repertório</button></div>
+<button class="menu-card" onclick="ir('mais')"><span class="symbol">⚙</span><strong>Configurações</strong><small>Ajustes e backup do aplicativo</small></button>
+</div>
+
+<div class="card" style="margin-top:16px">
+<h3>MINISTRO DO DIA</h3>
+<div id="resumoDia" class="muted">Nenhum ministro selecionado.</div>
+<button class="btn full" style="margin-top:12px" onclick="ir('dia')">Abrir repertório</button>
+</div>
 </section>
+
 <section id="ministros" class="page">
 <div class="row between"><h2>Ministros</h2><button class="btn" onclick="mostrarFormMinistro()">＋ Novo</button></div>
 <input class="search" id="buscaMinistro" placeholder="⌕ Buscar ministro..." oninput="listarMinistros()">
-<div id="formMinistro" class="card hidden"><h3>Cadastrar ministro</h3><label>Nome completo</label><input id="nomeMinistro" placeholder="Nome do ministro"><div class="row"><button class="btn" onclick="salvarMinistro()">Salvar</button><button class="btn secondary" onclick="fecharFormMinistro()">Cancelar</button></div></div>
+<div id="formMinistro" class="card hidden">
+<h3>Cadastrar ministro</h3>
+<label>Nome completo</label>
+<input id="nomeMinistro" placeholder="Nome do ministro">
+<div class="row">
+<button class="btn" onclick="salvarMinistro()">Salvar</button>
+<button class="btn secondary" onclick="fecharFormMinistro()">Cancelar</button>
+</div>
+</div>
 <div id="listaMinistros"></div>
 </section>
+
 <section id="musicas" class="page">
 <div class="row between"><h2>Músicas</h2><button class="btn" onclick="mostrarFormMusica()">＋ Nova</button></div>
 <input id="buscaMusica" placeholder="⌕ Buscar música..." oninput="listarMusicas()">
-<div id="formMusica" class="card hidden"><h3>Cadastrar música</h3><label>Ministro responsável</label><select id="musicaMinistro"></select><label>Nome da música</label><input id="musicaNome" placeholder="Nome da música"><label>Artista ou compositor</label><input id="musicaArtista" placeholder="Nome do artista"><label>Tom da música</label><input id="musicaTom" placeholder="Ex.: G, A, Am"><label>Categoria</label><select id="musicaCategoria"><option>Louvor</option><option>Adoração</option><option>Ministração</option><option>Outro</option></select><label>Cifra ou cifra melódica</label><textarea id="musicaCifra" placeholder="Digite ou cole a cifra..."></textarea><label>Link da música</label><input id="musicaLink" placeholder="https://..."><label>Link do PDF</label><input id="musicaPDF" placeholder="https://..."><div class="row"><button class="btn" onclick="salvarMusica()">Salvar música</button><button class="btn secondary" onclick="fecharFormMusica()">Cancelar</button></div></div>
+<div id="formMusica" class="card hidden">
+<h3>Cadastrar música</h3>
+<label>Ministro responsável</label>
+<select id="musicaMinistro"></select>
+<label>Nome da música</label>
+<input id="musicaNome" placeholder="Nome da música">
+<label>Artista ou compositor</label>
+<input id="musicaArtista" placeholder="Nome do artista">
+<label>Tom da música</label>
+<input id="musicaTom" placeholder="Ex.: G, A, Am">
+<label>Categoria</label>
+<select id="musicaCategoria"><option>Louvor</option><option>Adoração</option><option>Ministração</option><option>Outro</option></select>
+<label>Cifra ou cifra melódica</label>
+<textarea id="musicaCifra" placeholder="Digite ou cole a cifra..."></textarea>
+<label>Link da música</label>
+<input id="musicaLink" placeholder="https://...">
+<label>Link do PDF</label>
+<input id="musicaPDF" placeholder="https://...">
+<div class="row">
+<button class="btn" onclick="salvarMusica()">Salvar música</button>
+<button class="btn secondary" onclick="fecharFormMusica()">Cancelar</button>
+</div>
+</div>
 <div id="listaMusicas"></div>
 </section>
-<section id="repertorio" class="page"><h2>Meu Repertório</h2><p class="muted">Biblioteca completa de cifras, partituras, PDFs e links.</p><input id="buscaRepertorio" placeholder="⌕ Buscar no repertório..." oninput="listarRepertorio()"><div id="listaRepertorio"></div></section>
+
+<section id="repertorio" class="page">
+<h2>Meu Repertório</h2>
+<p class="muted">Biblioteca completa de cifras, partituras, PDFs e links.</p>
+<input id="buscaRepertorio" placeholder="⌕ Buscar no repertório..." oninput="listarRepertorio()">
+<div id="listaRepertorio"></div>
+</section>
+
 <section id="dia" class="page">
 <h2>Ministro do Dia</h2>
-<div class="card"><h3>Preparação do culto</h3><label>Data do culto</label><input type="date" id="dataCulto"><label>Ministro responsável</label><select id="escolherDia"></select><button class="btn full" onclick="salvarDia()">Salvar ministro do dia</button></div>
-<div class="card"><h3>Repertório do culto</h3><label>Adicionar música ao setlist</label><select id="musicaSetlist"></select><button class="btn full" onclick="adicionarSetlist()">＋ Adicionar música</button><div id="listaSetlist" style="margin-top:12px"></div></div>
+<div class="card">
+<h3>Preparação do culto</h3>
+<label>Data do culto</label>
+<input type="date" id="dataCulto">
+<label>Ministro responsável</label>
+<select id="escolherDia"></select>
+<button id="btnSalvarDia" type="button" class="btn full" onclick="salvarDia()">Salvar ministro do dia</button>
+</div>
+
+<div class="card">
+<h3>Repertório do culto</h3>
+<label>Adicionar música ao setlist</label>
+<select id="musicaSetlist"></select>
+<button class="btn full" onclick="adicionarSetlist()">＋ Adicionar música</button>
+<div id="listaSetlist" style="margin-top:12px"></div>
+</div>
 </section>
-<section id="detalhe" class="page"><button class="btn secondary" onclick="voltarDetalhe()">← Voltar</button><h2 style="margin-top:18px">Detalhes da Música</h2><div id="conteudoDetalhe"></div></section>
-<section id="mais" class="page"><h2>Mais opções</h2><div class="card"><h3>Backup dos dados</h3><p class="muted">Guarde uma cópia dos seus ministros, músicas e repertórios.</p><button class="btn full" onclick="exportar()">↓ Exportar backup</button><button class="btn secondary full" style="margin-top:9px" onclick="document.getElementById('arquivo').click()">↑ Restaurar backup</button><input type="file" id="arquivo" class="hidden" accept=".json,application/json" onchange="importar(event)"></div><div class="card"><h3>Sobre o aplicativo</h3><p><strong style="color:var(--gold)">POD Sax</strong></p><p class="muted">Biblioteca Musical • Ministério de Louvor</p><p class="muted">Louvar é um privilégio!</p></div></section>
+
+<section id="detalhe" class="page">
+<button class="btn secondary" onclick="voltarDetalhe()">← Voltar</button>
+<h2 style="margin-top:18px">Detalhes da Música</h2>
+<div id="conteudoDetalhe"></div>
+</section>
+
+<section id="mais" class="page">
+<h2>Mais opções</h2>
+<div class="card">
+<h3>Backup dos dados</h3>
+<p class="muted">Guarde uma cópia dos seus ministros, músicas e repertórios.</p>
+<button class="btn full" onclick="exportar()">↓ Exportar backup</button>
+<button class="btn secondary full" style="margin-top:9px" onclick="document.getElementById('arquivo').click()">↑ Restaurar backup</button>
+<input type="file" id="arquivo" class="hidden" accept=".json,application/json" onchange="importar(event)">
+</div>
+<div class="card">
+<h3>Sobre o aplicativo</h3>
+<p><strong style="color:var(--gold)">POD Sax</strong></p>
+<p class="muted">Biblioteca Musical • Ministério de Louvor</p>
+<p class="muted">Louvar é um privilégio!</p>
+</div>
+</section>
+
 </main>
-<nav class="bottom"><button class="nav-btn active" data-page="inicio" onclick="ir('inicio')"><span>⌂</span>Início</button><button class="nav-btn" data-page="ministros" onclick="ir('ministros')"><span>♟</span>Ministros</button><button class="nav-btn" data-page="musicas" onclick="ir('musicas')"><span>♫</span>Músicas</button><button class="nav-btn" data-page="mais" onclick="ir('mais')"><span>☰</span>Mais</button></nav>
+
+<nav class="bottom">
+<button class="nav-btn active" data-page="inicio" onclick="ir('inicio')"><span>⌂</span>Início</button>
+<button class="nav-btn" data-page="ministros" onclick="ir('ministros')"><span>♟</span>Ministros</button>
+<button class="nav-btn" data-page="musicas" onclick="ir('musicas')"><span>♫</span>Músicas</button>
+<button class="nav-btn" data-page="mais" onclick="ir('mais')"><span>☰</span>Mais</button>
+</nav>
+
 <script>
 let dados;
-try{dados=JSON.parse(localStorage.getItem("podSaxDados"))||{};}catch(e){dados={};}
+
+try{
+ dados=JSON.parse(localStorage.getItem("podSaxDados"))||{};
+}catch(e){
+ dados={};
+}
+
 dados.ministros=Array.isArray(dados.ministros)?dados.ministros:[];
 dados.musicas=Array.isArray(dados.musicas)?dados.musicas:[];
 dados.setlist=Array.isArray(dados.setlist)?dados.setlist:[];
 dados.ministroDia=dados.ministroDia??"";
 dados.dataCulto=dados.dataCulto??"";
-let musicaAtual=null,paginaAnterior="musicas";
+
+let musicaAtual=null;
+let paginaAnterior="musicas";
+
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;",
+ "<":"&lt;",
+ ">":"&gt;",
+ '"':"&quot;",
+ "'":"&#39;"
+ }[c]));
+}
+
+function nomeMinistroDoDia(){
+ const valor=dados.ministroDia;
+
+ if(valor===""||valor===null||valor===undefined)return "";
+
+ const indice=Number(valor);
+
+ if(Number.isInteger(indice)&&dados.ministros[indice]){
+  return dados.ministros[indice];
+ }
+
+ return "";
+}
+
+function atualizarResumoDia(){
+ const resumo=document.getElementById("resumoDia");
+ if(!resumo)return;
+
+ const nome=nomeMinistroDoDia();
+
+ if(!nome){
+  resumo.textContent="Nenhum ministro selecionado.";
+  return;
+ }
+
+ let dataTexto="Data não informada";
+
+ if(dados.dataCulto){
+  const partes=dados.dataCulto.split("-");
+  if(partes.length===3){
+   dataTexto=partes[2]+"/"+partes[1]+"/"+partes[0];
+  }
+ }
+
+ resumo.textContent=nome+" • Culto: "+dataTexto;
+}
 
 function guardar(){
  try{
   localStorage.setItem("podSaxDados",JSON.stringify(dados));
-  if(!localStorage.getItem("podSaxDados"))throw new Error("Falha na gravação");
+
+  const teste=localStorage.getItem("podSaxDados");
+
+  if(!teste){
+   throw new Error("Falha na gravação");
+  }
+
   atualizar();
   return true;
- }catch(e){console.error(e);alert("Não foi possível salvar. Verifique o armazenamento do aplicativo.");return false;}
+
+ }catch(e){
+  console.error("Erro ao guardar dados:",e);
+  alert("Não foi possível salvar. Verifique o armazenamento do aplicativo.");
+  return false;
+ }
 }
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
 function ir(p){
  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
  document.getElementById(p).classList.add("active");
- document.querySelectorAll(".nav-btn").forEach(x=>x.classList.toggle("active",x.dataset.page===p));
+
+ document.querySelectorAll(".nav-btn").forEach(x=>{
+  x.classList.toggle("active",x.dataset.page===p);
+ });
+
  window.scrollTo(0,0);
- if(p==="ministros")listarMinistros();if(p==="musicas")listarMusicas();if(p==="repertorio")listarRepertorio();if(p==="dia")atualizarDia();
+
+ if(p==="ministros")listarMinistros();
+ if(p==="musicas")listarMusicas();
+ if(p==="repertorio")listarRepertorio();
+ if(p==="dia")atualizarDia();
 }
+
 function atualizar(){
  document.getElementById("qMinistros").textContent=dados.ministros.length;
  document.getElementById("qMusicas").textContent=dados.musicas.length;
+
  let op='<option value="">Selecione um ministro</option>';
- dados.ministros.forEach((m,i)=>op+=`<option value="${i}">${esc(m)}</option>`);
+
+ dados.ministros.forEach((m,i)=>{
+  op+=`<option value="${i}">${esc(m)}</option>`;
+ });
+
  document.getElementById("musicaMinistro").innerHTML=op;
  document.getElementById("escolherDia").innerHTML=op;
- document.getElementById("resumoDia").textContent=dados.ministroDia!==""?(dados.ministros[Number(dados.ministroDia)]||"Ministro não encontrado"):"Nenhum ministro selecionado.";
- listarMinistros();listarMusicas();listarRepertorio();atualizarDia();
+
+ atualizarResumoDia();
+
+ listarMinistros();
+ listarMusicas();
+ listarRepertorio();
+ atualizarDia();
 }
-function mostrarFormMinistro(){document.getElementById("formMinistro").classList.remove("hidden");}
-function fecharFormMinistro(){document.getElementById("formMinistro").classList.add("hidden");}
+
+function mostrarFormMinistro(){
+ document.getElementById("formMinistro").classList.remove("hidden");
+}
+
+function fecharFormMinistro(){
+ document.getElementById("formMinistro").classList.add("hidden");
+}
+
 function salvarMinistro(){
- let n=document.getElementById("nomeMinistro").value.trim();if(!n)return alert("Informe o nome do ministro.");
+ let n=document.getElementById("nomeMinistro").value.trim();
+
+ if(!n)return alert("Informe o nome do ministro.");
+
  dados.ministros.push(n);
- if(guardar()){document.getElementById("nomeMinistro").value="";fecharFormMinistro();alert("Ministro cadastrado!");}
-}
-function listarMinistros(){
- let q=(document.getElementById("buscaMinistro").value||"").toLowerCase();
- let lista=dados.ministros.map((m,i)=>({m,i})).filter(x=>x.m.toLowerCase().includes(q));
- document.getElementById("listaMinistros").innerHTML=lista.map(x=>`<div class="person" onclick="verMinistro(${x.i})"><div class="avatar">${esc(x.m.split(" ").map(a=>a[0]).slice(0,2).join("").toUpperCase())}</div><div class="person-info"><strong>${esc(x.m)}</strong><small>${dados.musicas.filter(s=>s.ministro===x.i).length} músicas</small></div><span class="arrow">›</span></div>`).join("")||'<div class="empty">Nenhum ministro cadastrado.</div>';
-}
-function verMinistro(i){
- paginaAnterior="ministros";ir("repertorio");document.getElementById("buscaRepertorio").value="";
- let lista=dados.musicas.map((m,j)=>({m,j})).filter(x=>x.m.ministro===i);
- document.getElementById("listaRepertorio").innerHTML=`<h3>${esc(dados.ministros[i])}</h3>`+(lista.map(x=>cartao(x.m,x.j)).join("")||'<div class="empty">Nenhuma música cadastrada para este ministro.</div>');
-}
-function mostrarFormMusica(){if(!dados.ministros.length)return alert("Cadastre primeiro um ministro.");document.getElementById("formMusica").classList.remove("hidden");}
-function fecharFormMusica(){document.getElementById("formMusica").classList.add("hidden");}
-function salvarMusica(){
- let dono=document.getElementById("musicaMinistro").value,nome=document.getElementById("musicaNome").value.trim();
- if(dono===""||!nome)return alert("Escolha o ministro e informe o nome da música.");
- dados.musicas.push({ministro:Number(dono),nome,artista:document.getElementById("musicaArtista").value.trim(),tom:document.getElementById("musicaTom").value.trim(),categoria:document.getElementById("musicaCategoria").value,cifra:document.getElementById("musicaCifra").value,link:document.getElementById("musicaLink").value.trim(),pdf:document.getElementById("musicaPDF").value.trim()});
+
  if(guardar()){
- ["musicaNome","musicaArtista","musicaTom","musicaCifra","musicaLink","musicaPDF"].forEach(id=>document.getElementById(id).value="");
- fecharFormMusica();alert("Música cadastrada!");
+  document.getElementById("nomeMinistro").value="";
+  fecharFormMinistro();
+  alert("Ministro cadastrado!");
  }
 }
-function cartao(m,i){return `<div class="song"><div class="song-icon">♫</div><div class="song-info"><strong>${esc(m.nome)}</strong><small>${esc(m.artista||"Artista não informado")} • ${esc(m.tom||"Tom não informado")}</small><div class="song-actions"><button class="btn" onclick="detalhar(${i})">Abrir música</button><button class="btn secondary" onclick="adicionarSetlistDireto(${i})">＋ Culto</button></div></div></div>`;}
+
+function listarMinistros(){
+ let q=(document.getElementById("buscaMinistro").value||"").toLowerCase();
+
+ let lista=dados.ministros.map((m,i)=>({m,i}))
+ .filter(x=>x.m.toLowerCase().includes(q));
+
+ document.getElementById("listaMinistros").innerHTML=
+ lista.map(x=>`
+ <div class="person" onclick="verMinistro(${x.i})">
+ <div class="avatar">${esc(x.m.split(" ").map(a=>a[0]).slice(0,2).join("").toUpperCase())}</div>
+ <div class="person-info">
+ <strong>${esc(x.m)}</strong>
+ <small>${dados.musicas.filter(s=>s.ministro===x.i).length} músicas</small>
+ </div>
+ <span class="arrow">›</span>
+ </div>
+ `).join("")||'<div class="empty">Nenhum ministro cadastrado.</div>';
+}
+
+function verMinistro(i){
+ paginaAnterior="ministros";
+ ir("repertorio");
+ document.getElementById("buscaRepertorio").value="";
+
+ let lista=dados.musicas.map((m,j)=>({m,j}))
+ .filter(x=>x.m.ministro===i);
+
+ document.getElementById("listaRepertorio").innerHTML=
+ `<h3>${esc(dados.ministros[i])}</h3>`+
+ (lista.map(x=>cartao(x.m,x.j)).join("")||
+ '<div class="empty">Nenhuma música cadastrada para este ministro.</div>');
+}
+
+function mostrarFormMusica(){
+ if(!dados.ministros.length)return alert("Cadastre primeiro um ministro.");
+ document.getElementById("formMusica").classList.remove("hidden");
+}
+
+function fecharFormMusica(){
+ document.getElementById("formMusica").classList.add("hidden");
+}
+
+function salvarMusica(){
+ let dono=document.getElementById("musicaMinistro").value;
+ let nome=document.getElementById("musicaNome").value.trim();
+
+ if(dono===""||!nome){
+  return alert("Escolha o ministro e informe o nome da música.");
+ }
+
+ dados.musicas.push({
+  ministro:Number(dono),
+  nome,
+  artista:document.getElementById("musicaArtista").value.trim(),
+  tom:document.getElementById("musicaTom").value.trim(),
+  categoria:document.getElementById("musicaCategoria").value,
+  cifra:document.getElementById("musicaCifra").value,
+  link:document.getElementById("musicaLink").value.trim(),
+  pdf:document.getElementById("musicaPDF").value.trim()
+ });
+
+ if(guardar()){
+  ["musicaNome","musicaArtista","musicaTom","musicaCifra","musicaLink","musicaPDF"].forEach(id=>{
+   document.getElementById(id).value="";
+  });
+
+  fecharFormMusica();
+  alert("Música cadastrada!");
+ }
+}
+
+function cartao(m,i){
+ return `
+ <div class="song">
+ <div class="song-icon">♫</div>
+ <div class="song-info">
+ <strong>${esc(m.nome)}</strong>
+ <small>${esc(m.artista||"Artista não informado")} • ${esc(m.tom||"Tom não informado")}</small>
+ <div class="song-actions">
+ <button class="btn" onclick="detalhar(${i})">Abrir música</button>
+ <button class="btn secondary" onclick="adicionarSetlistDireto(${i})">＋ Culto</button>
+ </div>
+ </div>
+ </div>`;
+}
+
 function listarMusicas(){
  let q=(document.getElementById("buscaMusica").value||"").toLowerCase();
- let lista=dados.musicas.map((m,i)=>({m,i})).filter(x=>(x.m.nome+" "+(x.m.artista||"")).toLowerCase().includes(q));
- document.getElementById("listaMusicas").innerHTML=lista.map(x=>cartao(x.m,x.i)).join("")||'<div class="empty">Nenhuma música cadastrada.</div>';
+
+ let lista=dados.musicas.map((m,i)=>({m,i}))
+ .filter(x=>(x.m.nome+" "+(x.m.artista||"")).toLowerCase().includes(q));
+
+ document.getElementById("listaMusicas").innerHTML=
+ lista.map(x=>cartao(x.m,x.i)).join("")||
+ '<div class="empty">Nenhuma música cadastrada.</div>';
 }
+
 function listarRepertorio(){
  let q=(document.getElementById("buscaRepertorio").value||"").toLowerCase();
- let lista=dados.musicas.map((m,i)=>({m,i})).filter(x=>(x.m.nome+" "+(x.m.artista||"")+" "+(dados.ministros[x.m.ministro]||"")).toLowerCase().includes(q));
- document.getElementById("listaRepertorio").innerHTML=lista.map(x=>cartao(x.m,x.i)).join("")||'<div class="empty">Nenhuma música encontrada.</div>';
+
+ let lista=dados.musicas.map((m,i)=>({m,i}))
+ .filter(x=>(x.m.nome+" "+(x.m.artista||"")+" "+(dados.ministros[x.m.ministro]||"")).toLowerCase().includes(q));
+
+ document.getElementById("listaRepertorio").innerHTML=
+ lista.map(x=>cartao(x.m,x.i)).join("")||
+ '<div class="empty">Nenhuma música encontrada.</div>';
 }
+
 function detalhar(i){
- musicaAtual=i;let m=dados.musicas[i];if(!m)return;paginaAnterior=document.querySelector(".page.active").id;ir("detalhe");
- document.getElementById("conteudoDetalhe").innerHTML=`<div class="detail-cover"><div class="cover-art">✝</div><div><h3>${esc(m.nome)}</h3><p>${esc(m.artista||"Artista não informado")}</p><p>${esc(m.categoria||"Música")}</p></div></div><div class="tabs"><button class="tab" onclick="mostrarConteudo('cifra')"><span>♬</span>Cifra</button><button class="tab" onclick="mostrarConteudo('pdf')"><span>▤</span>PDF</button><button class="tab" onclick="mostrarConteudo('link')"><span>↗</span>Link</button><button class="tab" onclick="mostrarConteudo('ouvir')"><span>▶</span>Ouvir</button></div><div id="conteudoMusica" class="card"><h3>Informações</h3><p class="muted">Tom: ${esc(m.tom||"Não informado")}</p><p class="muted">Ministro: ${esc(dados.ministros[m.ministro]||"Não informado")}</p><p class="muted">Categoria: ${esc(m.categoria||"Não informada")}</p></div><button class="btn full" onclick="excluirMusica(${i})">Excluir música</button>`;
+ musicaAtual=i;
+ let m=dados.musicas[i];
+
+ if(!m)return;
+
+ paginaAnterior=document.querySelector(".page.active").id;
+ ir("detalhe");
+
+ document.getElementById("conteudoDetalhe").innerHTML=`
+ <div class="detail-cover">
+ <div class="cover-art">✝</div>
+ <div>
+ <h3>${esc(m.nome)}</h3>
+ <p>${esc(m.artista||"Artista não informado")}</p>
+ <p>${esc(m.categoria||"Música")}</p>
+ </div>
+ </div>
+
+ <div class="tabs">
+ <button class="tab" onclick="mostrarConteudo('cifra')"><span>♬</span>Cifra</button>
+ <button class="tab" onclick="mostrarConteudo('pdf')"><span>▤</span>PDF</button>
+ <button class="tab" onclick="mostrarConteudo('link')"><span>↗</span>Link</button>
+ <button class="tab" onclick="mostrarConteudo('ouvir')"><span>▶</span>Ouvir</button>
+ </div>
+
+ <div id="conteudoMusica" class="card">
+ <h3>Informações</h3>
+ <p class="muted">Tom: ${esc(m.tom||"Não informado")}</p>
+ <p class="muted">Ministro: ${esc(dados.ministros[m.ministro]||"Não informado")}</p>
+ <p class="muted">Categoria: ${esc(m.categoria||"Não informada")}</p>
+ </div>
+
+ <button class="btn full" onclick="excluirMusica(${i})">Excluir música</button>
+ `;
 }
+
 function mostrarConteudo(tipo){
- let m=dados.musicas[musicaAtual],area=document.getElementById("conteudoMusica");
- if(tipo==="cifra")area.innerHTML=`<h3>Cifra / Cifra melódica</h3><div class="cifra">${esc(m.cifra||"Nenhuma cifra cadastrada.")}</div>`;
- else if(tipo==="pdf")area.innerHTML=m.pdf?`<h3>Partitura ou PDF</h3><button class="btn full" onclick="abrir('${esc(m.pdf)}')">Abrir PDF</button>`:"<p class='muted'>Nenhum PDF cadastrado.</p>";
- else{let link=m.link;area.innerHTML=link?`<h3>${tipo==="ouvir"?"Ouvir música":"Link da música"}</h3><button class="btn full" onclick="abrir('${esc(link)}')">Abrir link</button>`:"<p class='muted'>Nenhum link cadastrado.</p>";}
+ let m=dados.musicas[musicaAtual];
+ let area=document.getElementById("conteudoMusica");
+
+ if(!m||!area)return;
+
+ if(tipo==="cifra"){
+  area.innerHTML=`
+  <h3>Cifra / Cifra melódica</h3>
+  <div class="cifra">${esc(m.cifra||"Nenhuma cifra cadastrada.")}</div>`;
+ }else if(tipo==="pdf"){
+  area.innerHTML=m.pdf?
+  `<h3>Partitura ou PDF</h3><button class="btn full" onclick="abrir('${esc(m.pdf)}')">Abrir PDF</button>`:
+  "<p class='muted'>Nenhum PDF cadastrado.</p>";
+ }else{
+  let link=m.link;
+
+  area.innerHTML=link?
+  `<h3>${tipo==="ouvir"?"Ouvir música":"Link da música"}</h3><button class="btn full" onclick="abrir('${esc(link)}')">Abrir link</button>`:
+  "<p class='muted'>Nenhum link cadastrado.</p>";
+ }
 }
-function abrir(url){try{let u=new URL(url);if(u.protocol!=="https:"&&u.protocol!=="http:")throw Error();window.open(u.href,"_blank","noopener");}catch(e){alert("Link inválido. Confira o endereço cadastrado.");}}
-function voltarDetalhe(){ir(paginaAnterior==="detalhe"?"musicas":paginaAnterior);}
-function excluirMusica(i){if(!confirm("Deseja excluir esta música?"))return;dados.musicas.splice(i,1);dados.setlist=dados.setlist.filter(x=>x!==i).map(x=>x>i?x-1:x);guardar();ir("musicas");}
+
+function abrir(url){
+ try{
+  let u=new URL(url);
+
+  if(u.protocol!=="https:"&&u.protocol!=="http:"){
+   throw Error();
+  }
+
+  window.open(u.href,"_blank","noopener");
+
+ }catch(e){
+  alert("Link inválido. Confira o endereço cadastrado.");
+ }
+}
+
+function voltarDetalhe(){
+ ir(paginaAnterior==="detalhe"?"musicas":paginaAnterior);
+}
+
+function excluirMusica(i){
+ if(!confirm("Deseja excluir esta música?"))return;
+
+ dados.musicas.splice(i,1);
+
+ dados.setlist=dados.setlist
+ .filter(x=>x!==i)
+ .map(x=>x>i?x-1:x);
+
+ guardar();
+ ir("musicas");
+}
+
+/* CORREÇÃO DO MINISTRO DO DIA */
 function salvarDia(){
- const seletor=document.getElementById("escolherDia");
- const ministro=seletor.value;
- const data=document.getElementById("dataCulto").value;
- if(ministro===""){alert("Selecione o ministro responsável.");return;}
- dados.ministroDia=String(ministro);
- dados.dataCulto=data;
- if(guardar())alert("Ministro do dia salvo com sucesso!");
+ try{
+  const seletor=document.getElementById("escolherDia");
+  const campoData=document.getElementById("dataCulto");
+
+  if(!seletor||!campoData){
+   alert("Não foi possível localizar os campos do ministro do dia.");
+   return;
+  }
+
+  const ministro=seletor.value;
+  const data=campoData.value;
+
+  if(ministro===""){
+   alert("Selecione o ministro responsável.");
+   return;
+  }
+
+  const indice=Number(ministro);
+
+  if(!Number.isInteger(indice)||!dados.ministros[indice]){
+   alert("Não foi possível identificar o ministro. Atualize a lista e tente novamente.");
+   return;
+  }
+
+  dados.ministroDia=String(indice);
+  dados.dataCulto=data;
+
+  localStorage.setItem("podSaxDados",JSON.stringify(dados));
+
+  const verificacao=JSON.parse(localStorage.getItem("podSaxDados"));
+
+  if(String(verificacao.ministroDia)!==String(indice)){
+   throw new Error("A gravação não foi confirmada.");
+  }
+
+  atualizar();
+  atualizarResumoDia();
+
+  alert("Ministro do dia salvo com sucesso!");
+
+ }catch(e){
+  console.error("Erro ao salvar ministro do dia:",e);
+  alert("Ocorreu um erro ao salvar. Feche e abra o aplicativo e tente novamente.");
+ }
 }
+
 function atualizarDia(){
  const s=document.getElementById("escolherDia");
- if(s)s.value=String(dados.ministroDia??"");
- const d=document.getElementById("dataCulto");if(d)d.value=dados.dataCulto||"";
+
+ if(s){
+  s.value=String(dados.ministroDia??"");
+ }
+
+ const d=document.getElementById("dataCulto");
+
+ if(d){
+  d.value=dados.dataCulto||"";
+ }
+
  const select=document.getElementById("musicaSetlist");
- if(select)select.innerHTML='<option value="">Selecione uma música</option>'+dados.musicas.map((m,i)=>`<option value="${i}">${esc(m.nome)}</option>`).join("");
+
+ if(select){
+  select.innerHTML=
+  '<option value="">Selecione uma música</option>'+
+  dados.musicas.map((m,i)=>`<option value="${i}">${esc(m.nome)}</option>`).join("");
+ }
+
  const area=document.getElementById("listaSetlist");
- if(area)area.innerHTML=dados.setlist.map((i,n)=>{let m=dados.musicas[i];return m?`<div class="song"><div class="song-info"><strong>${n+1}. ${esc(m.nome)}</strong><small>${esc(m.artista||"")}</small></div><button class="btn danger" onclick="removerSetlist(${n})">×</button><button class="btn secondary" onclick="detalhar(${i})">Ver</button></div>`:"";}).join("")||'<div class="empty">Seu repertório do culto está vazio.</div>';
+
+ if(area){
+  area.innerHTML=dados.setlist.map((i,n)=>{
+   let m=dados.musicas[i];
+
+   return m?
+   `<div class="song">
+   <div class="song-info">
+   <strong>${n+1}. ${esc(m.nome)}</strong>
+   <small>${esc(m.artista||"")}</small>
+   </div>
+   <button class="btn danger" onclick="removerSetlist(${n})">×</button>
+   <button class="btn secondary" onclick="detalhar(${i})">Ver</button>
+   </div>`:"";
+  }).join("")||
+  '<div class="empty">Seu repertório do culto está vazio.</div>';
+ }
 }
-function adicionarSetlist(){let v=document.getElementById("musicaSetlist").value;if(v==="")return alert("Selecione uma música.");dados.setlist.push(Number(v));guardar();}
-function adicionarSetlistDireto(i){dados.setlist.push(i);if(guardar())alert("Música adicionada ao repertório!");}
-function removerSetlist(n){dados.setlist.splice(n,1);guardar();}
-function exportar(){let blob=new Blob([JSON.stringify(dados,null,2)],{type:"application/json"});let url=URL.createObjectURL(blob);let a=document.createElement("a");a.href=url;a.download="backup-pod-sax.json";a.click();URL.revokeObjectURL(url);}
-function importar(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!Array.isArray(x.ministros)||!Array.isArray(x.musicas))throw Error();dados={...dados,...x};dados.setlist=Array.isArray(dados.setlist)?dados.setlist:[];if(guardar())alert("Backup restaurado!");}catch(err){alert("Arquivo de backup inválido.");}};r.readAsText(f);e.target.value="";}
+
+function adicionarSetlist(){
+ let v=document.getElementById("musicaSetlist").value;
+
+ if(v==="")return alert("Selecione uma música.");
+
+ dados.setlist.push(Number(v));
+ guardar();
+}
+
+function adicionarSetlistDireto(i){
+ dados.setlist.push(i);
+
+ if(guardar()){
+  alert("Música adicionada ao repertório!");
+ }
+}
+
+function removerSetlist(n){
+ dados.setlist.splice(n,1);
+ guardar();
+}
+
+function exportar(){
+ let blob=new Blob([JSON.stringify(dados,null,2)],{type:"application/json"});
+ let url=URL.createObjectURL(blob);
+ let a=document.createElement("a");
+
+ a.href=url;
+ a.download="backup-pod-sax.json";
+ a.click();
+
+ URL.revokeObjectURL(url);
+}
+
+function importar(e){
+ let f=e.target.files[0];
+
+ if(!f)return;
+
+ let r=new FileReader();
+
+ r.onload=()=>{
+  try{
+   let x=JSON.parse(r.result);
+
+   if(!Array.isArray(x.ministros)||!Array.isArray(x.musicas)){
+    throw Error();
+   }
+
+   dados={...dados,...x};
+
+   dados.setlist=Array.isArray(dados.setlist)?dados.setlist:[];
+
+   if(guardar()){
+    alert("Backup restaurado!");
+   }
+
+  }catch(err){
+   alert("Arquivo de backup inválido.");
+  }
+ };
+
+ r.readAsText(f);
+ e.target.value="";
+}
+
 atualizar();
-if("serviceWorker" in navigator)navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
+
+if("serviceWorker" in navigator){
+ navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
+}
 </script>
+
 <footer>POD SAX • LOUVAR É UM PRIVILÉGIO!</footer>
 </body>
 </html>
