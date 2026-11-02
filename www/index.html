@@ -87,10 +87,7 @@ footer{text-align:center;color:#718096;font-size:10px;padding:22px}
 <header>
 <div class="brand">
 <img src="./assets/icon-512.png" alt="POD Sax">
-<div>
-<strong>POD Sax</strong>
-<small>BIBLIOTECA MUSICAL</small>
-</div>
+<div><strong>POD Sax</strong><small>BIBLIOTECA MUSICAL</small></div>
 </div>
 <button class="header-btn" onclick="ir('mais')" aria-label="Mais opções">⚙</button>
 </header>
@@ -127,10 +124,7 @@ footer{text-align:center;color:#718096;font-size:10px;padding:22px}
 </section>
 
 <section id="ministros" class="page">
-<div class="row between">
-<h2>Ministros</h2>
-<button class="btn" onclick="mostrarFormMinistro()">＋ Novo</button>
-</div>
+<div class="row between"><h2>Ministros</h2><button class="btn" onclick="mostrarFormMinistro()">＋ Novo</button></div>
 <input class="search" id="buscaMinistro" placeholder="⌕ Buscar ministro..." oninput="listarMinistros()">
 <div id="formMinistro" class="card hidden">
 <h3>Cadastrar ministro</h3>
@@ -145,10 +139,7 @@ footer{text-align:center;color:#718096;font-size:10px;padding:22px}
 </section>
 
 <section id="musicas" class="page">
-<div class="row between">
-<h2>Músicas</h2>
-<button class="btn" onclick="mostrarFormMusica()">＋ Nova</button>
-</div>
+<div class="row between"><h2>Músicas</h2><button class="btn" onclick="mostrarFormMusica()">＋ Nova</button></div>
 <input id="buscaMusica" placeholder="⌕ Buscar música..." oninput="listarMusicas()">
 <div id="formMusica" class="card hidden">
 <h3>Cadastrar música</h3>
@@ -161,12 +152,7 @@ footer{text-align:center;color:#718096;font-size:10px;padding:22px}
 <label>Tom da música</label>
 <input id="musicaTom" placeholder="Ex.: G, A, Am">
 <label>Categoria</label>
-<select id="musicaCategoria">
-<option>Louvor</option>
-<option>Adoração</option>
-<option>Ministração</option>
-<option>Outro</option>
-</select>
+<select id="musicaCategoria"><option>Louvor</option><option>Adoração</option><option>Ministração</option><option>Outro</option></select>
 <label>Cifra ou cifra melódica</label>
 <textarea id="musicaCifra" placeholder="Digite ou cole a cifra..."></textarea>
 <label>Link da música</label>
@@ -193,20 +179,12 @@ footer{text-align:center;color:#718096;font-size:10px;padding:22px}
 
 <div class="card">
 <h3>Preparação do culto</h3>
-
 <label>Data do culto</label>
 <input type="date" id="dataCulto">
-
 <label>Ministro responsável</label>
 <select id="escolherDia"></select>
 
-<button
-id="btnSalvarDia"
-type="button"
-class="btn full"
-onclick="salvarDia()"
-style="margin-top:12px"
->
+<button id="btnSalvarDia" type="button" class="btn full" onclick="salvarDia()" style="margin-top:12px">
 💾 SALVAR CONFIGURAÇÕES DO CULTO
 </button>
 </div>
@@ -217,6 +195,10 @@ style="margin-top:12px"
 <select id="musicaSetlist"></select>
 <button class="btn full" onclick="adicionarSetlist()">＋ Adicionar música</button>
 <div id="listaSetlist" style="margin-top:12px"></div>
+
+<button id="btnSalvarTudo" type="button" class="btn full" onclick="salvarTudoCulto()" style="margin-top:15px">
+💾 SALVAR TODO O CULTO
+</button>
 </div>
 </section>
 
@@ -272,32 +254,23 @@ let paginaAnterior="musicas";
 
 function esc(v){
  return String(v??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;",
- "<":"&lt;",
- ">":"&gt;",
- '"':"&quot;",
- "'":"&#39;"
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
  }[c]));
 }
 
 function nomeMinistroDoDia(){
  const valor=dados.ministroDia;
-
  if(valor===""||valor===null||valor===undefined)return "";
-
  const indice=Number(valor);
-
  if(Number.isInteger(indice)&&dados.ministros[indice]){
   return dados.ministros[indice];
  }
-
  return "";
 }
 
 function atualizarResumoDia(){
  const resumo=document.getElementById("resumoDia");
  if(!resumo)return;
-
  const nome=nomeMinistroDoDia();
 
  if(!nome){
@@ -306,7 +279,6 @@ function atualizarResumoDia(){
  }
 
  let dataTexto="Data não informada";
-
  if(dados.dataCulto){
   const partes=dados.dataCulto.split("-");
   if(partes.length===3){
@@ -314,18 +286,16 @@ function atualizarResumoDia(){
   }
  }
 
- resumo.textContent=nome+" • Culto: "+dataTexto;
+ resumo.textContent=nome+" • Culto: "+dataTexto+
+ " • Músicas: "+dados.setlist.length;
 }
 
 function guardar(){
  try{
   localStorage.setItem("podSaxDados",JSON.stringify(dados));
-
   const teste=localStorage.getItem("podSaxDados");
 
-  if(!teste){
-   throw new Error("Falha na gravação");
-  }
+  if(!teste)throw new Error("Falha na gravação");
 
   atualizar();
   return true;
@@ -358,7 +328,6 @@ function atualizar(){
  document.getElementById("qMusicas").textContent=dados.musicas.length;
 
  let op='<option value="">Selecione um ministro</option>';
-
  dados.ministros.forEach((m,i)=>{
   op+=`<option value="${i}">${esc(m)}</option>`;
  });
@@ -367,7 +336,6 @@ function atualizar(){
  document.getElementById("escolherDia").innerHTML=op;
 
  atualizarResumoDia();
-
  listarMinistros();
  listarMusicas();
  listarRepertorio();
@@ -384,7 +352,6 @@ function fecharFormMinistro(){
 
 function salvarMinistro(){
  let n=document.getElementById("nomeMinistro").value.trim();
-
  if(!n)return alert("Informe o nome do ministro.");
 
  dados.ministros.push(n);
@@ -461,7 +428,6 @@ function salvarMusica(){
   ["musicaNome","musicaArtista","musicaTom","musicaCifra","musicaLink","musicaPDF"].forEach(id=>{
    document.getElementById(id).value="";
   });
-
   fecharFormMusica();
   alert("Música cadastrada!");
  }
@@ -507,7 +473,6 @@ function listarRepertorio(){
 function detalhar(i){
  musicaAtual=i;
  let m=dados.musicas[i];
-
  if(!m)return;
 
  paginaAnterior=document.querySelector(".page.active").id;
@@ -544,7 +509,6 @@ function detalhar(i){
 function mostrarConteudo(tipo){
  let m=dados.musicas[musicaAtual];
  let area=document.getElementById("conteudoMusica");
-
  if(!m||!area)return;
 
  if(tipo==="cifra"){
@@ -557,7 +521,6 @@ function mostrarConteudo(tipo){
   "<p class='muted'>Nenhum PDF cadastrado.</p>";
  }else{
   let link=m.link;
-
   area.innerHTML=link?
   `<h3>${tipo==="ouvir"?"Ouvir música":"Link da música"}</h3><button class="btn full" onclick="abrir('${esc(link)}')">Abrir link</button>`:
   "<p class='muted'>Nenhum link cadastrado.</p>";
@@ -567,13 +530,8 @@ function mostrarConteudo(tipo){
 function abrir(url){
  try{
   let u=new URL(url);
-
-  if(u.protocol!=="https:"&&u.protocol!=="http:"){
-   throw Error();
-  }
-
+  if(u.protocol!=="https:"&&u.protocol!=="http:")throw Error();
   window.open(u.href,"_blank","noopener");
-
  }catch(e){
   alert("Link inválido. Confira o endereço cadastrado.");
  }
@@ -587,7 +545,6 @@ function excluirMusica(i){
  if(!confirm("Deseja excluir esta música?"))return;
 
  dados.musicas.splice(i,1);
-
  dados.setlist=dados.setlist
  .filter(x=>x!==i)
  .map(x=>x>i?x-1:x);
@@ -596,19 +553,11 @@ function excluirMusica(i){
  ir("musicas");
 }
 
-/* SALVAR CONFIGURAÇÕES DO MINISTRO DO DIA */
+/* SALVAR CONFIGURAÇÕES DO CULTO */
 function salvarDia(){
  try{
-  const seletor=document.getElementById("escolherDia");
-  const campoData=document.getElementById("dataCulto");
-
-  if(!seletor||!campoData){
-   alert("Não foi possível localizar os campos do culto.");
-   return;
-  }
-
-  const ministro=seletor.value;
-  const data=campoData.value;
+  const ministro=document.getElementById("escolherDia").value;
+  const data=document.getElementById("dataCulto").value;
 
   if(ministro===""){
    alert("Selecione o ministro responsável.");
@@ -618,51 +567,87 @@ function salvarDia(){
   const indice=Number(ministro);
 
   if(!Number.isInteger(indice)||!dados.ministros[indice]){
-   alert("Ministro não encontrado. Atualize a lista e tente novamente.");
+   alert("Ministro não encontrado.");
    return;
   }
 
   dados.ministroDia=String(indice);
   dados.dataCulto=data;
 
-  if(!guardar()){
+  if(guardar()){
+   alert("Configurações do culto salvas com sucesso!");
+  }
+
+ }catch(e){
+  console.error(e);
+  alert("Erro ao salvar as configurações do culto.");
+ }
+}
+
+/* SALVAR DATA, MINISTRO E TODO O REPERTÓRIO */
+function salvarTudoCulto(){
+ try{
+  const ministro=document.getElementById("escolherDia").value;
+  const data=document.getElementById("dataCulto").value;
+
+  if(ministro===""){
+   alert("Selecione o ministro responsável.");
    return;
   }
 
-  const verificacao=JSON.parse(
-   localStorage.getItem("podSaxDados")
-  );
+  const indice=Number(ministro);
 
-  if(
-   String(verificacao.ministroDia)!==String(indice)||
-   String(verificacao.dataCulto||"")!==String(data||"")
-  ){
-   throw new Error("A gravação não foi confirmada.");
+  if(!Number.isInteger(indice)||!dados.ministros[indice]){
+   alert("Ministro não encontrado.");
+   return;
   }
 
-  atualizarDia();
+  dados.ministroDia=String(indice);
+  dados.dataCulto=data;
+
+  // Mantém somente músicas existentes e preserva a ordem.
+  dados.setlist=dados.setlist.filter(i=>
+   Number.isInteger(Number(i)) &&
+   Number(i)>=0 &&
+   Number(i)<dados.musicas.length
+  ).map(Number);
+
+  // Grava todos os dados do aplicativo em conjunto.
+  const conteudo=JSON.stringify(dados);
+  localStorage.setItem("podSaxDados",conteudo);
+
+  // Confirma a gravação dos dados.
+  const teste=JSON.parse(localStorage.getItem("podSaxDados"));
+
+  if(
+   teste.ministroDia!==dados.ministroDia ||
+   teste.dataCulto!==dados.dataCulto ||
+   JSON.stringify(teste.setlist)!==JSON.stringify(dados.setlist)
+  ){
+   throw new Error("Não foi possível confirmar o salvamento.");
+  }
+
+  atualizar();
   atualizarResumoDia();
 
-  alert("Configurações do culto salvas com sucesso!");
+  alert(
+   "Todo o culto foi salvo com sucesso!\n\n"+
+   "Ministro: "+dados.ministros[indice]+"\n"+
+   "Músicas no repertório: "+dados.setlist.length
+  );
 
  }catch(e){
-  console.error("Erro ao salvar configurações:",e);
-  alert("Ocorreu um erro ao salvar. Tente novamente.");
+  console.error("Erro ao salvar todo o culto:",e);
+  alert("Não foi possível salvar todo o culto. Tente novamente.");
  }
 }
 
 function atualizarDia(){
  const s=document.getElementById("escolherDia");
-
- if(s){
-  s.value=String(dados.ministroDia??"");
- }
+ if(s)s.value=String(dados.ministroDia??"");
 
  const d=document.getElementById("dataCulto");
-
- if(d){
-  d.value=dados.dataCulto||"";
- }
+ if(d)d.value=dados.dataCulto||"";
 
  const select=document.getElementById("musicaSetlist");
 
@@ -694,7 +679,6 @@ function atualizarDia(){
 
 function adicionarSetlist(){
  let v=document.getElementById("musicaSetlist").value;
-
  if(v==="")return alert("Selecione uma música.");
 
  dados.setlist.push(Number(v));
@@ -705,7 +689,7 @@ function adicionarSetlist(){
 }
 
 function adicionarSetlistDireto(i){
- dados.setlist.push(i);
+ dados.setlist.push(Number(i));
 
  if(guardar()){
   alert("Música adicionada ao repertório!");
@@ -721,17 +705,14 @@ function exportar(){
  let blob=new Blob([JSON.stringify(dados,null,2)],{type:"application/json"});
  let url=URL.createObjectURL(blob);
  let a=document.createElement("a");
-
  a.href=url;
  a.download="backup-pod-sax.json";
  a.click();
-
  URL.revokeObjectURL(url);
 }
 
 function importar(e){
  let f=e.target.files[0];
-
  if(!f)return;
 
  let r=new FileReader();
@@ -745,8 +726,11 @@ function importar(e){
    }
 
    dados={...dados,...x};
-
+   dados.ministros=Array.isArray(dados.ministros)?dados.ministros:[];
+   dados.musicas=Array.isArray(dados.musicas)?dados.musicas:[];
    dados.setlist=Array.isArray(dados.setlist)?dados.setlist:[];
+   dados.ministroDia=dados.ministroDia??"";
+   dados.dataCulto=dados.dataCulto??"";
 
    if(guardar()){
     alert("Backup restaurado!");
