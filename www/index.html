@@ -145,8 +145,40 @@ hr{border:0;border-top:1px solid var(--line);margin:15px 0}footer{text-align:cen
 <input type="date" id="dataCulto">
 <label>Ministro responsável</label>
 <select id="escolherDia"></select>
-<button id="btnSalvarDia" type="button" class="btn full" onclick="salvarDia()">Salvar ministro do dia</button>
-</div>
+function salvarDia(){
+  try {
+    const ministro = document.getElementById("escolherDia").value;
+    const data = document.getElementById("dataCulto").value;
+
+    if(ministro === ""){
+      alert("Selecione o ministro responsável.");
+      return;
+    }
+
+    if(!dados.ministros[Number(ministro)]){
+      alert("Ministro não encontrado.");
+      return;
+    }
+
+    dados.ministroDia = String(ministro);
+    dados.dataCulto = data;
+
+    localStorage.setItem("podSaxDados", JSON.stringify(dados));
+
+    const teste = JSON.parse(localStorage.getItem("podSaxDados"));
+
+    if(String(teste.ministroDia) !== String(ministro)){
+      throw new Error("Não foi possível confirmar o salvamento.");
+    }
+
+    atualizar();
+    alert("Configurações do culto salvas com sucesso!");
+
+  } catch(erro) {
+    console.error(erro);
+    alert("Erro ao salvar as configurações do culto.");
+  }
+}
 
 <div class="card">
 <h3>Repertório do culto</h3>
