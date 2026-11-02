@@ -343,8 +343,20 @@ let musicaAtual=null;
 let paginaAnterior="musicas";
 
 function guardar(){
- localStorage.setItem("podSaxDados",JSON.stringify(dados));
- atualizar();
+ try{
+  localStorage.setItem("podSaxDados",JSON.stringify(dados));
+
+  let teste=localStorage.getItem("podSaxDados");
+  if(!teste) throw new Error("Os dados não foram encontrados.");
+
+  atualizar();
+  return true;
+
+ }catch(erro){
+  alert("Não foi possível salvar os dados. Verifique o armazenamento do aplicativo e tente novamente.");
+  console.error("Erro ao salvar:",erro);
+  return false;
+ }
 }
 function esc(v){
  return String(v??"").replace(/[&<>"']/g,c=>({
