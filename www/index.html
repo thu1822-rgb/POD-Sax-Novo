@@ -533,10 +533,27 @@ function excluirMusica(i){
  guardar();ir("musicas");
 }
 function salvarDia(){
- dados.ministroDia=document.getElementById("escolherDia").value;
- dados.dataCulto=document.getElementById("dataCulto").value;
- guardar();alert("Ministro do dia salvo!");
-}
+ try{
+  const ministro=document.getElementById("escolherDia").value;
+  const data=document.getElementById("dataCulto").value;
+
+  if(ministro===""){
+   alert("Selecione o ministro responsável.");
+   return;
+  }
+
+  dados.ministroDia=ministro;
+  dados.dataCulto=data;
+
+  if(guardar()===true){
+   alert("Ministro do dia salvo com sucesso!");
+  }
+
+ }catch(erro){
+  console.error(erro);
+  alert("Erro ao salvar o ministro do dia.");
+ }
+}a
 function atualizarDia(){
  let s=document.getElementById("escolherDia");
  if(s)s.value=dados.ministroDia;
