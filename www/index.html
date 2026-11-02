@@ -196,8 +196,59 @@ footer{text-align:center;color:#718096;font-size:10px;padding:22px}
 <button class="btn full" onclick="adicionarSetlist()">＋ Adicionar música</button>
 <div id="listaSetlist" style="margin-top:12px"></div>
 
-<button id="btnSalvarTudo" type="button" class="btn full" onclick="salvarTudoCulto()" style="margin-top:15px">
-💾 SALVAR TODO O CULTO
+
+function salvarTudoCulto(){
+ try{
+  const ministro=document.getElementById("escolherDia").value;
+  const data=document.getElementById("dataCulto").value;
+
+  if(ministro===""){
+   alert("Selecione o ministro responsável.");
+   return;
+  }
+
+  const indice=Number(ministro);
+
+  if(!Number.isInteger(indice)||!dados.ministros[indice]){
+   alert("Ministro não encontrado.");
+   return;
+  }
+
+  dados.ministroDia=String(indice);
+  dados.dataCulto=data;
+
+  // Preserva todas as músicas adicionadas ao repertório.
+  const repertorioSalvo=[...dados.setlist];
+
+  // Salva todos os dados do aplicativo.
+  const conteudo=JSON.stringify(dados);
+  localStorage.setItem("podSaxDados",conteudo);
+
+  // Confere se o repertório foi gravado.
+  const teste=JSON.parse(localStorage.getItem("podSaxDados"));
+
+  if(!teste || !Array.isArray(teste.setlist)){
+   throw new Error("Falha ao salvar o repertório.");
+  }
+
+  if(JSON.stringify(teste.setlist)!==JSON.stringify(repertorioSalvo)){
+   throw new Error("As músicas não foram gravadas corretamente.");
+  }
+
+  atualizar();
+
+  alert(
+   "Todo o culto foi salvo com sucesso!\n\n"+
+   "Ministro: "+dados.ministros[indice]+"\n"+
+   "Músicas no repertório: "+repertorioSalvo.length
+  );
+
+ }catch(e){
+  console.error("Erro ao salvar todo o culto:",e);
+  alert("Não foi possível salvar todo o culto. Tente novamente.");
+ }
+}
+
 </button>
 </div>
 </section>
